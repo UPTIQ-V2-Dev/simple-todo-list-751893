@@ -4,10 +4,11 @@ import { todoFormSchema, TodoFormData } from '@/lib/validations';
 import { Todo } from '@/types/todo';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
+import { Textarea } from '@/components/ui/textarea';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 
 interface TodoFormProps {
-    onSubmit: (name: string) => void;
+    onSubmit: (name: string, description?: string) => void;
     existingTodos: Todo[];
 }
 
@@ -15,7 +16,8 @@ export const TodoForm = ({ onSubmit, existingTodos }: TodoFormProps) => {
     const form = useForm<TodoFormData>({
         resolver: zodResolver(todoFormSchema),
         defaultValues: {
-            name: ''
+            name: '',
+            description: ''
         }
     });
 
@@ -32,7 +34,7 @@ export const TodoForm = ({ onSubmit, existingTodos }: TodoFormProps) => {
                 return;
             }
 
-            onSubmit(data.name);
+            onSubmit(data.name, data.description);
             form.reset();
         } catch (error) {
             form.setError('name', {
@@ -46,13 +48,14 @@ export const TodoForm = ({ onSubmit, existingTodos }: TodoFormProps) => {
         <Form {...form}>
             <form
                 onSubmit={form.handleSubmit(handleSubmit)}
-                className='flex gap-2'
+                className='space-y-4'
             >
                 <FormField
                     control={form.control}
                     name='name'
                     render={({ field }) => (
-                        <FormItem className='flex-1'>
+                        <FormItem>
+                            <FormLabel>Todo Name</FormLabel>
                             <FormControl>
                                 <Input
                                     placeholder='Enter todo name...'
@@ -64,9 +67,28 @@ export const TodoForm = ({ onSubmit, existingTodos }: TodoFormProps) => {
                         </FormItem>
                     )}
                 />
+                <FormField
+                    control={form.control}
+                    name='description'
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Description (optional)</FormLabel>
+                            <FormControl>
+                                <Textarea
+                                    placeholder='Enter todo description...'
+                                    {...field}
+                                    aria-label='Todo description'
+                                    rows={3}
+                                />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
                 <Button
                     type='submit'
                     disabled={form.formState.isSubmitting}
+                    className='w-full'
                 >
                     Add Todo
                 </Button>

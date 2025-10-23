@@ -20,6 +20,7 @@ describe('useTodos', () => {
         expect(result.current.todos[0]).toEqual({
             id: expect.any(String),
             name: 'Test todo',
+            description: undefined,
             createdAt: expect.any(Date)
         });
     });
@@ -119,6 +120,68 @@ describe('useTodos', () => {
         expect(result.current.todos[0].createdAt.getTime()).toBeGreaterThanOrEqual(
             result.current.todos[1].createdAt.getTime()
         );
+    });
+
+    it('adds todo with description', () => {
+        const { result } = renderHook(() => useTodos());
+
+        act(() => {
+            result.current.addTodo('Test todo', 'Test description');
+        });
+
+        expect(result.current.todos).toHaveLength(1);
+        expect(result.current.todos[0]).toEqual({
+            id: expect.any(String),
+            name: 'Test todo',
+            description: 'Test description',
+            createdAt: expect.any(Date)
+        });
+    });
+
+    it('adds todo without description', () => {
+        const { result } = renderHook(() => useTodos());
+
+        act(() => {
+            result.current.addTodo('Test todo');
+        });
+
+        expect(result.current.todos).toHaveLength(1);
+        expect(result.current.todos[0]).toEqual({
+            id: expect.any(String),
+            name: 'Test todo',
+            description: undefined,
+            createdAt: expect.any(Date)
+        });
+    });
+
+    it('trims whitespace from description', () => {
+        const { result } = renderHook(() => useTodos());
+
+        act(() => {
+            result.current.addTodo('Test todo', '  Test description  ');
+        });
+
+        expect(result.current.todos[0].description).toBe('Test description');
+    });
+
+    it('handles empty description string', () => {
+        const { result } = renderHook(() => useTodos());
+
+        act(() => {
+            result.current.addTodo('Test todo', '');
+        });
+
+        expect(result.current.todos[0].description).toBeUndefined();
+    });
+
+    it('handles whitespace-only description', () => {
+        const { result } = renderHook(() => useTodos());
+
+        act(() => {
+            result.current.addTodo('Test todo', '   ');
+        });
+
+        expect(result.current.todos[0].description).toBeUndefined();
     });
 
     it('handles empty string after trimming', () => {

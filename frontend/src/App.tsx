@@ -6,8 +6,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 export const App = () => {
     const { todos, addTodo } = useTodos();
 
-    const handleAddTodo = (name: string) => {
-        addTodo(name);
+    const handleAddTodo = (name: string, description?: string) => {
+        addTodo(name, description);
     };
 
     return (

@@ -5,7 +5,7 @@ export const useTodos = () => {
     const [todos, setTodos] = useState<Todo[]>([]);
 
     const addTodo = useCallback(
-        (name: string) => {
+        (name: string, description?: string) => {
             const trimmedName = name.trim();
 
             if (!trimmedName) {
@@ -22,6 +22,7 @@ export const useTodos = () => {
             const newTodo: Todo = {
                 id: crypto.randomUUID(),
                 name: trimmedName,
+                description: description?.trim() || undefined,
                 createdAt: new Date()
             };
 
