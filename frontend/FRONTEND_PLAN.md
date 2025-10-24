@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-A minimal single-page todo application with React 19, Vite, Shadcn/UI, and Tailwind v4. The app allows users to add todos with a name and optional description field - no edit, delete, or completion functionality required.
+A minimal single-page todo application with React 19, Vite, Shadcn/UI, and Tailwind v4. The app allows users to add todos with just a name field - no edit, delete, or completion functionality required.
 
 ## Technical Stack
 
@@ -25,7 +25,7 @@ A minimal single-page todo application with React 19, Vite, Shadcn/UI, and Tailw
 **Components:**
 
 - Simple in-memory state management using React useState
-- Todo interface: `{ id: string, name: string, description?: string, createdAt: Date }`
+- Todo interface: `{ id: string, name: string, createdAt: Date }`
 
 ### Phase 2: UI Components
 
@@ -39,7 +39,6 @@ A minimal single-page todo application with React 19, Vite, Shadcn/UI, and Tailw
 
 - `Card` - Container for the todo app
 - `Input` - Text input for todo name
-- `Textarea` - Text area for optional todo description
 - `Button` - Submit button for form
 - `Form` - Form wrapper with validation
 
@@ -64,7 +63,6 @@ A minimal single-page todo application with React 19, Vite, Shadcn/UI, and Tailw
 **Validation rules:**
 
 - Todo name: required, min 1 char, max 100 chars, trim whitespace
-- Todo description: optional, max 500 chars, trim whitespace
 - Prevent duplicate todo names
 
 ## File Structure
@@ -116,13 +114,10 @@ src/
 - ✅ Shows validation error for empty input
 - ✅ Shows validation error for whitespace-only input
 - ✅ Shows validation error for input exceeding 100 characters
-- ✅ Shows validation error for description exceeding 500 characters
-- ✅ Calls onSubmit with trimmed name and description values for valid input
-- ✅ Allows empty/optional description
-- ✅ Trims description whitespace
+- ✅ Calls onSubmit with trimmed value for valid input
 - ✅ Clears form after successful submission
 - ✅ Prevents submission of duplicate todo names
-- ✅ Form accessibility (labels, ARIA attributes for both name and description)
+- ✅ Form accessibility (labels, ARIA attributes)
 
 #### TodoList Component Tests (`TodoList.test.tsx`)
 
@@ -134,19 +129,14 @@ src/
 #### TodoItem Component Tests (`TodoItem.test.tsx`)
 
 - ✅ Renders todo name correctly
-- ✅ Displays todo description when provided
-- ✅ Hides description when not provided or empty
-- ✅ Handles long descriptions properly
 - ✅ Displays creation timestamp
 - ✅ Has proper semantic markup
 
 #### useTodos Hook Tests (`useTodos.test.tsx`)
 
 - ✅ Initializes with empty todos array
-- ✅ Adds new todo with correct structure (including optional description)
+- ✅ Adds new todo with correct structure
 - ✅ Generates unique IDs for todos
-- ✅ Handles todos with and without descriptions
-- ✅ Trims whitespace from descriptions
 - ✅ Prevents adding duplicate todo names
 - ✅ Maintains todos in state correctly
 
@@ -154,8 +144,7 @@ src/
 
 - ✅ Renders main app layout
 - ✅ Form and list components integration
-- ✅ End-to-end todo addition flow (name only)
-- ✅ End-to-end todo addition flow (with description)
+- ✅ End-to-end todo addition flow
 - ✅ Error handling integration
 
 ### Test Utilities (`test-utils.tsx`)
@@ -264,8 +253,8 @@ npm run test:ui       # Run with Vitest UI
 
 ## Success Criteria
 
-- ✅ User can add todos with name and optional description
-- ✅ Form validates input (required name, optional description with length limits, duplicates)
+- ✅ User can add todos with name only
+- ✅ Form validates input (required, length, duplicates)
 - ✅ Todos display in reverse chronological order
 - ✅ Responsive design works on mobile/desktop
 - ✅ 90%+ test coverage achieved

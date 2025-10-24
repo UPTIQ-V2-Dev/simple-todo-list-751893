@@ -20,10 +20,7 @@ export const TodoItem = ({ todo }: TodoItemProps) => {
         <Card>
             <CardContent className='p-4'>
                 <div className='flex justify-between items-start'>
-                    <div className='flex-1'>
-                        <h3 className='font-medium text-foreground'>{todo.name}</h3>
-                        {todo.description && <p className='text-sm text-muted-foreground mt-1'>{todo.description}</p>}
-                    </div>
+                    <h3 className='font-medium text-foreground'>{todo.name}</h3>
                     <time
                         dateTime={todo.createdAt.toISOString()}
                         className='text-sm text-muted-foreground ml-4 shrink-0'
